@@ -1,0 +1,319 @@
+@charset "UTF-8";
+
+/* --- 変数設定 --- */
+:root {
+    --text-main: #895c6a;
+    --text-sub: #3f3135;
+    --accent: #923586; /* 落ち着いたゴールド */
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+} 
+
+
+/* :root {
+    --text-main: #ffffff;
+    --text-sub: #cbd5e1;
+    --accent: #fcd34d;
+    /* ▼ ここを変える（黒っぽい半透明にする） ▼ *//*
+    --glass-bg: rgba(0, 0, 0, 0.25);      /* 白(255)から黒(0)へ変更 *//*
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text-main);
+    /* 動くグラデーション背景（知的なネイビー〜深紫） */
+    /* background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e293b); */
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- メインコンテナ（グラスモーフィズム） --- */
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px); /* すりガラス効果 */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px 24px;
+    width: 85%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: var(--glass-shadow);
+    position: relative;
+    overflow: hidden;
+    animation: floatUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* 光の反射エフェクト（装飾） */
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- プロフィール画像 --- */
+.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.2);
+    position: relative;
+    z-index: 2;
+}
+
+/* 後ろで回る輪（テック感・先進性） */
+.orbit {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    animation: spin 10s linear infinite;
+    z-index: 1;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* --- テキスト --- */
+h1 {
+    font-family: 'Cinzel', serif; /* 英語タイトルのフォント */
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.05em;
+    background: linear-gradient(to right, #895c6a, #3f3135);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.role {
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+.bio {
+    color: var(--text-sub);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-weight: 300;
+    text-align: left; /* 長文は左揃えの方が知的 */
+    padding: 0 10px;
+}
+
+/* --- リンクボタン --- */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 文字と矢印を左右に配置 */
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn::after {
+    content: '→';
+    font-family: sans-serif;
+    opacity: 0.5;
+    transition: 0.3s;
+    color: var(--text-main);
+}
+
+.btn:hover::after {
+    opacity: 1;
+    transform: translateX(5px);
+    color: var(--accent);
+}
+
+/* --- フッター --- */
+footer {
+    margin-top: 30px;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.2);
+}
+
+/* アニメーション遅延用クラス */
+.fade-up {
+    opacity: 0;
+    animation: slideIn 0.6s ease forwards;
+}
+.d-1 { animation-delay: 0.2s; }
+.d-2 { animation-delay: 0.4s; }
+.d-3 { animation-delay: 0.6s; }
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- レイアウトコンテナ (左右分割) --- */
+.bottom-grid {
+    display: grid;
+    /* 左(SNS): 1fr, 右(Main): 1.4fr の比率で分割 */
+    grid-template-columns: 1fr 1.4fr;
+    gap: 12px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* --- 左側エリア：SNS (2x2) --- */
+.sns-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 横2列 */
+    grid-template-rows: 1fr 1fr;    /* 縦2行 */
+    gap: 8px;
+}
+
+.sns-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1; /* 正方形を維持 */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-sub);
+    font-size: 1.2rem; /* アイコンサイズ */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sns-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* --- 右側エリア：メインリンク (縦2つ) --- */
+.main-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.main-btn {
+    flex: 1; /* 高さを均等に埋める */
+    display: flex;
+    flex-direction: column; /* 文字とアイコンを縦に積むか、横にするか */
+    justify-content: center;
+    align-items: flex-start; /* 左揃え */
+    padding: 0 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* アイコンと文字の配置調整 */
+.main-btn i {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.main-btn span {
+    z-index: 1;
+}
+
+/* ホバー時の挙動 */
+.main-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(2px);
+}
+
+.main-btn:hover i {
+    opacity: 1;
+    color: var(--accent);
+    transform: translate(2px, -2px); /* 右上に少し動く */
+}
+
+/* コンタクトボタン（下段）を目立たせたい場合のオプション */
+.main-btn.highlight {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- カタカナ名前のスタイル --- */
+.kana-name {
+    font-family: 'Noto Sans JP', sans-serif; /* 読みやすいゴシック体 */
+    font-size: 0.75rem;       /* 英語名よりかなり小さく */
+    color: var(--text-sub);   /* 真っ白ではなくグレーに */
+    margin-top: -2px;         /* 上の英語名にピタッと寄せる */
+    margin-bottom: 15px;      /* 下の肩書きとは少し離す */
+    letter-spacing: 0.1em;    /* 文字の間隔を少し開ける */
+    font-weight: 300;         /* 細めの文字で繊細に */
+}
